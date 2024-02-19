@@ -1,6 +1,7 @@
 import express from 'express';
 import mongoose from'mongoose';
 import dotenv from 'dotenv';
+import userRoutes from './routes/user.route.js';
 dotenv.config();
 //place mongo connection in env file to hide password and connection to DB
 //and check if connection is successfull 
@@ -14,3 +15,5 @@ const app = express();
 app.listen(3000, () => {
     console.log('Server listening on port 3000');
 });
+
+app.use("/backend/user", userRoutes);
