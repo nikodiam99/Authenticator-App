@@ -2,7 +2,7 @@ import User from '../models/user.models.js';
 import bcryptjs from 'bcryptjs';
 //request is data we are getting from client side
 //response is data we send to client side
-export const signup = async (req, res) => {
+export const signup = async (req, res, next) => {
     //console.log(req.body);
     const{username, email, password} = req.body;
     //hashSync instead of hash that is asyncronous
@@ -14,8 +14,8 @@ export const signup = async (req, res) => {
         await newUser.save();
         res.status(201).json({ message: "User created successfully."});
     } catch (error){
-        res.status(500).json(error.message);
+       // res.status(500).json(error.message);
+        next(error); //getting error from middleware in index.js
     }
-    //we need to use await because it is asynchronous behaviour
     
 };
