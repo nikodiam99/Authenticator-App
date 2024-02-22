@@ -1,10 +1,11 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 //NIKO VERSION
 export default function SignUp() {
   const [formData, setFormData] = useState({}); //a piece of state to save all of the stuff
   const [error, setError] = useState(false);
   const[loading, setLoading] = useState(false);
+  const navigate = useNavigate();
   const handleChange = (e) => {
     //strip operator "..." to keep prev value of form operator
     //ex: when we write something in username input, "[e.target.id]:" is username and the "e.target.value" is what we put in and save
@@ -32,6 +33,7 @@ export default function SignUp() {
         setError(true);
         return;
       }
+      navigate('/sign-in');
   };
 
   return (
