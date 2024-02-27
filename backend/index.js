@@ -4,6 +4,7 @@ import dotenv from 'dotenv';
 import userRoutes from './routes/user.route.js';
 import authRoutes from './routes/auth.route.js';
 import cookieParser from 'cookie-parser';
+import path from 'path';
 
 dotenv.config();
 //place mongo connection in env file to hide password and connection to DB
@@ -13,7 +14,15 @@ mongoose.connect(process.env.MONGO).then (()=>{
 }).catch((err)=>{
     console.log(err);
 });
+
+const __dirname = path.resolve(); //find dynamic directory name
 const app = express();
+app.use(express.static(path.join(__dirname,'/client/dist')))//in vite we create the build in dist
+//whatever dir name is in the server, go to client/dist (build folder) / and send index.html to client
+app.get('*', (req,res)=>{
+    res.sendFile(path.join(__dirname, 'client','dist','index.html'))
+});
+
 //so we can send json as input of backend
 app.use(express.json());
 
